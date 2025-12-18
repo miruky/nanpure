@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="ナンプレ">
+  <title>ナンプレ</title>
+  <style>
+    .frame { stroke: #1b2230; }
+    .grid { stroke: #8d97a8; }
+    .accent { fill: #3b5bdb; }
+    .dot { fill: #1b2230; }
+    @media (prefers-color-scheme: dark) {
+      .frame { stroke: #e8ecf4; }
+      .grid { stroke: #4a5568; }
+      .accent { fill: #7c93f7; }
+      .dot { fill: #e8ecf4; }
+    }
+  </style>
+  <rect class="frame" x="5" y="5" width="38" height="38" rx="9" fill="none" stroke-width="3" />
+  <g class="grid" stroke-width="2" stroke-linecap="round">
+    <line x1="17.7" y1="8.5" x2="17.7" y2="39.5" />
+    <line x1="30.3" y1="8.5" x2="30.3" y2="39.5" />
+    <line x1="8.5" y1="17.7" x2="39.5" y2="17.7" />
+    <line x1="8.5" y1="30.3" x2="39.5" y2="30.3" />
+  </g>
+  <rect class="accent" x="32.2" y="7.2" width="8.6" height="8.6" rx="2.6" />
+  <circle class="dot" cx="24" cy="24" r="2.3" />
+  <circle class="dot" cx="11.35" cy="36.65" r="2.3" />
+  <circle class="dot" cx="36.65" cy="36.65" r="2.3" />
+</svg>
