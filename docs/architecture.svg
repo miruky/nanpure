@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" role="img" aria-labelledby="arch-title arch-desc" font-family="'Hiragino Sans','Noto Sans JP',system-ui,sans-serif">
+  <title id="arch-title">ナンプレのアーキテクチャ</title>
+  <desc id="arch-desc">main.tsがAppを起動し、Appが局の状態Gameを介して描画層(src/ui)と中核ロジック(src/lib)を仲介する。問題はURLで共有・復元し、進行中の局と設定はlocalStorageに保存する。</desc>
+  <style>
+    .panel { fill: none; stroke: #ccd2dd; stroke-width: 1.5; stroke-dasharray: 6 5; }
+    .node { fill: #ffffff; stroke: #d8dde6; stroke-width: 1.5; }
+    .accent { fill: #eaeefc; stroke: #3b5bdb; stroke-width: 1.5; }
+    .lbl { fill: #1b2230; font-size: 15px; font-weight: 600; }
+    .sub { fill: #5d6677; font-size: 12px; }
+    .tag { fill: #5d6677; font-size: 12px; font-weight: 600; letter-spacing: .04em; }
+    .edge { stroke: #aab2c0; stroke-width: 1.6; fill: none; }
+    .edge-lbl { fill: #5d6677; font-size: 11px; }
+    @media (prefers-color-scheme: dark) {
+      .panel { stroke: #3a4252; }
+      .node { fill: #161b27; stroke: #2a3242; }
+      .accent { fill: #1c2438; stroke: #7c93f7; }
+      .lbl { fill: #e8ecf4; }
+      .sub, .tag, .edge-lbl { fill: #99a3b4; }
+      .edge { stroke: #56607a; }
+    }
+  </style>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#aab2c0" />
+    </marker>
+  </defs>
+
+  <!-- エントリ -->
+  <rect class="node" x="310" y="20" width="200" height="44" rx="11" />
+  <text class="lbl" x="410" y="42" text-anchor="middle">main.ts</text>
+  <text class="sub" x="410" y="58" text-anchor="middle">#app にマウント</text>
+
+  <!-- App -->
+  <rect class="accent" x="294" y="92" width="232" height="58" rx="12" />
+  <text class="lbl" x="410" y="116" text-anchor="middle">App (app.ts)</text>
+  <text class="sub" x="410" y="135" text-anchor="middle">入力・タイマー・ヒント・共有・保存</text>
+
+  <!-- 共有 / 永続 -->
+  <rect class="node" x="54" y="99" width="160" height="46" rx="11" />
+  <text class="lbl" x="134" y="120" text-anchor="middle" font-size="13">URL #s= &amp;d=</text>
+  <text class="sub" x="134" y="136" text-anchor="middle">問題を共有・復元</text>
+
+  <rect class="node" x="606" y="99" width="160" height="46" rx="11" />
+  <text class="lbl" x="686" y="120" text-anchor="middle" font-size="13">localStorage</text>
+  <text class="sub" x="686" y="136" text-anchor="middle">中断局・設定</text>
+
+  <!-- 局の状態 -->
+  <rect class="accent" x="310" y="172" width="200" height="48" rx="12" />
+  <text class="lbl" x="410" y="194" text-anchor="middle" font-size="14">Game (game.ts)</text>
+  <text class="sub" x="410" y="211" text-anchor="middle">局の状態・履歴・メモ</text>
+
+  <!-- 描画層 -->
+  <rect class="panel" x="44" y="244" width="346" height="256" rx="14" />
+  <text class="tag" x="62" y="268">描画層 — src/ui</text>
+
+  <rect class="node" x="66" y="290" width="150" height="80" rx="11" />
+  <text class="lbl" x="141" y="324" text-anchor="middle" font-size="14">BoardView</text>
+  <text class="sub" x="141" y="344" text-anchor="middle">SVG盤面・強調・メモ</text>
+
+  <rect class="node" x="224" y="290" width="144" height="80" rx="11" />
+  <text class="lbl" x="296" y="324" text-anchor="middle" font-size="14">Controls</text>
+  <text class="sub" x="296" y="344" text-anchor="middle">数字パッド・残数</text>
+
+  <rect class="node" x="66" y="386" width="150" height="80" rx="11" />
+  <text class="lbl" x="141" y="420" text-anchor="middle" font-size="14">icons</text>
+  <text class="sub" x="141" y="440" text-anchor="middle">操作アイコン(SVG)</text>
+
+  <rect class="node" x="224" y="386" width="144" height="80" rx="11" />
+  <text class="lbl" x="296" y="420" text-anchor="middle" font-size="13">キーボード</text>
+  <text class="sub" x="296" y="440" text-anchor="middle">移動・数字・ヒント</text>
+
+  <!-- 中核ロジック -->
+  <rect class="panel" x="430" y="244" width="346" height="256" rx="14" />
+  <text class="tag" x="448" y="268">中核ロジック — src/lib(テスト済み)</text>
+
+  <rect class="node" x="452" y="288" width="150" height="56" rx="11" />
+  <text class="lbl" x="527" y="312" text-anchor="middle" font-size="14">board</text>
+  <text class="sub" x="527" y="330" text-anchor="middle">盤面・候補(ビット)</text>
+
+  <rect class="node" x="614" y="288" width="150" height="56" rx="11" />
+  <text class="lbl" x="689" y="312" text-anchor="middle" font-size="14">solver</text>
+  <text class="sub" x="689" y="330" text-anchor="middle">制約伝播・一意解</text>
+
+  <rect class="node" x="452" y="356" width="150" height="56" rx="11" />
+  <text class="lbl" x="527" y="380" text-anchor="middle" font-size="14">techniques</text>
+  <text class="sub" x="527" y="398" text-anchor="middle">解法 → ヒント</text>
+
+  <rect class="node" x="614" y="356" width="150" height="56" rx="11" />
+  <text class="lbl" x="689" y="380" text-anchor="middle" font-size="14">difficulty</text>
+  <text class="sub" x="689" y="398" text-anchor="middle">難易度判定</text>
+
+  <rect class="node" x="452" y="424" width="312" height="56" rx="11" />
+  <text class="lbl" x="608" y="448" text-anchor="middle" font-size="14">generator</text>
+  <text class="sub" x="608" y="466" text-anchor="middle">一意性を保つ生成 / rng シード</text>
+
+  <!-- エッジ -->
+  <path class="edge" d="M410 64 L410 90" marker-end="url(#arr)" />
+  <path class="edge" d="M294 122 L216 122" marker-end="url(#arr)" />
+  <path class="edge" d="M526 122 L604 122" marker-end="url(#arr)" />
+  <path class="edge" d="M410 150 L410 170" marker-end="url(#arr)" />
+  <path class="edge" d="M338 220 L250 242" marker-end="url(#arr)" />
+  <path class="edge" d="M482 220 L566 242" marker-end="url(#arr)" />
+  <text class="edge-lbl" x="278" y="236" text-anchor="middle">描画</text>
+  <text class="edge-lbl" x="540" y="236" text-anchor="middle">求解・判定</text>
+</svg>
