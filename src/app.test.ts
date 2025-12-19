@@ -41,6 +41,7 @@ function noopHandlers(over: Partial<ControlHandlers> = {}): ControlHandlers {
     onUndo() {},
     onRedo() {},
     onTogglePencil() {},
+    onFillPencils() {},
     onHint() {},
     ...over,
   };
@@ -127,6 +128,36 @@ describe('createControls', () => {
     const pencil = controls.el.querySelector('.action.is-active');
     expect(pencil).not.toBeNull();
     expect(pencil!.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('自動メモボタンが候補一括メモのハンドラを呼ぶ', () => {
+    let filled = 0;
+    const controls = createControls(noopHandlers({ onFillPencils: () => (filled += 1) }));
+    const actions = controls.el.querySelectorAll<HTMLButtonElement>('.toolbar .action');
+    expect(actions.length).toBe(6);
+    const fill = [...actions].find((b) => b.textContent?.includes('自動メモ'));
+    expect(fill).toBeDefined();
+    fill!.click();
+    expect(filled).toBe(1);
+  });
+});
+
+describe('createBoard 配置アニメ', () => {
+  it('新しく置いた数字のときだけ is-placed を付ける', () => {
+    const game = newGame();
+    const board = createBoard(() => {});
+    document.body.append(board.el);
+    board.render(viewOf(game));
+    // 空きマスへ数字を入れて再描画すると、そのマスだけ is-placed が付く
+    const cell = game.given.findIndex((g) => !g);
+    game.select(cell);
+    game.enter(game.solution[cell]!);
+    board.render(viewOf(game));
+    const placed = board.el.querySelectorAll('.cell-value.is-placed');
+    expect(placed.length).toBe(1);
+    // 値が変わらない再描画では is-placed は消える(アニメは一度きり)
+    board.render(viewOf(game));
+    expect(board.el.querySelectorAll('.cell-value.is-placed').length).toBe(0);
   });
 });
 
