@@ -4,9 +4,11 @@
  */
 
 import type { SerializedGame } from './game';
+import { normalizeStats, type Stats } from './stats';
 
 const GAME_KEY = 'nanpure:game';
 const SETTINGS_KEY = 'nanpure:settings';
+const STATS_KEY = 'nanpure:stats';
 
 export type ThemePref = 'auto' | 'light' | 'dark';
 
@@ -80,4 +82,18 @@ export function saveGame(game: SerializedGame): void {
 
 export function clearGame(): void {
   remove(GAME_KEY);
+}
+
+export function loadStats(): Stats {
+  const raw = read(STATS_KEY);
+  if (!raw) return normalizeStats(null);
+  try {
+    return normalizeStats(JSON.parse(raw));
+  } catch {
+    return normalizeStats(null);
+  }
+}
+
+export function saveStats(stats: Stats): void {
+  write(STATS_KEY, JSON.stringify(stats));
 }
