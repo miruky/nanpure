@@ -278,6 +278,7 @@ export function mountApp(root: HTMLElement): void {
       pencilMode: game.pencilMode,
       canUndo: game.canUndo,
       canRedo: game.canRedo,
+      current: game.selected !== null ? game.values[game.selected]! : 0,
     });
 
     if (game.isSolved) showWin();
