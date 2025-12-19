@@ -22,6 +22,8 @@ export interface ControlState {
   pencilMode: boolean;
   canUndo: boolean;
   canRedo: boolean;
+  /** 選択中のマスに入っている数字。0なら強調しない。 */
+  current: number;
 }
 
 export interface ControlsHandle {
@@ -85,6 +87,7 @@ export function createControls(handlers: ControlHandlers): ControlsHandle {
       const left = state.remaining[d] ?? 0;
       remainNodes[d - 1]!.textContent = left > 0 ? String(left) : '';
       digitButtons[d - 1]!.classList.toggle('is-done', left <= 0);
+      digitButtons[d - 1]!.classList.toggle('is-current', state.current === d);
       digitButtons[d - 1]!.disabled = left <= 0;
     }
   }
