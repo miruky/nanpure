@@ -116,6 +116,7 @@ describe('createControls', () => {
       pencilMode: false,
       canUndo: true,
       canRedo: false,
+      current: 0,
     });
     const nums = controls.el.querySelectorAll<HTMLButtonElement>('.num');
     expect(nums[0]!.disabled).toBe(true);
@@ -124,10 +125,30 @@ describe('createControls', () => {
 
   it('メモモードを見た目に反映する', () => {
     const controls = createControls(noopHandlers());
-    controls.update({ remaining: new Array(10).fill(9), pencilMode: true, canUndo: false, canRedo: false });
+    controls.update({
+      remaining: new Array(10).fill(9),
+      pencilMode: true,
+      canUndo: false,
+      canRedo: false,
+      current: 0,
+    });
     const pencil = controls.el.querySelector('.action.is-active');
     expect(pencil).not.toBeNull();
     expect(pencil!.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('選択マスの数字をパッドで強調する', () => {
+    const controls = createControls(noopHandlers());
+    controls.update({
+      remaining: new Array(10).fill(9),
+      pencilMode: false,
+      canUndo: false,
+      canRedo: false,
+      current: 3,
+    });
+    const nums = controls.el.querySelectorAll<HTMLButtonElement>('.num');
+    expect(nums[2]!.classList.contains('is-current')).toBe(true);
+    expect(nums[0]!.classList.contains('is-current')).toBe(false);
   });
 
   it('自動メモボタンが候補一括メモのハンドラを呼ぶ', () => {
