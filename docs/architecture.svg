@@ -42,7 +42,7 @@
 
   <rect class="node" x="606" y="99" width="160" height="46" rx="11" />
   <text class="lbl" x="686" y="120" text-anchor="middle" font-size="13">localStorage</text>
-  <text class="sub" x="686" y="136" text-anchor="middle">中断局・設定</text>
+  <text class="sub" x="686" y="136" text-anchor="middle">中断局・設定・成績</text>
 
   <!-- 局の状態 -->
   <rect class="accent" x="310" y="172" width="200" height="48" rx="12" />
