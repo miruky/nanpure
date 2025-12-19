@@ -255,6 +255,16 @@ button {
   margin-left: auto;
 }
 
+/* 狭い画面では右寄せをやめ、左から素直に折り返して横溢れを防ぐ。 */
+@media (max-width: 560px) {
+  .meta-bar {
+    gap: calc(var(--space) * 2) calc(var(--space) * 3);
+  }
+  .stat--timer {
+    margin-left: 0;
+  }
+}
+
 .stat--mistakes.has-mistakes .stat-value {
   color: var(--danger);
 }
@@ -488,6 +498,12 @@ button {
 
 .num:hover:not(:disabled) {
   background: var(--accent-faint);
+  color: var(--accent-ink);
+}
+
+/* 選択中のマスと同じ数字。盤面の同値強調(--same)と色を揃える。 */
+.num.is-current {
+  background: var(--same);
   color: var(--accent-ink);
 }
 
