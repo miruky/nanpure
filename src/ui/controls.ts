@@ -13,6 +13,7 @@ export interface ControlHandlers {
   onUndo(): void;
   onRedo(): void;
   onTogglePencil(): void;
+  onFillPencils(): void;
   onHint(): void;
 }
 
@@ -42,14 +43,15 @@ export function createControls(handlers: ControlHandlers): ControlsHandle {
   root.className = 'controls';
 
   const actions = document.createElement('div');
-  actions.className = 'action-row';
+  actions.className = 'toolbar';
   const undo = actionButton('戻す', 'undo', handlers.onUndo);
   const redo = actionButton('やり直し', 'redo', handlers.onRedo);
   const erase = actionButton('消す', 'eraser', handlers.onErase);
   const pencil = actionButton('メモ', 'pencil', handlers.onTogglePencil);
   pencil.setAttribute('aria-pressed', 'false');
+  const fill = actionButton('自動メモ', 'notes', handlers.onFillPencils);
   const hint = actionButton('ヒント', 'bulb', handlers.onHint);
-  actions.append(undo, redo, erase, pencil, hint);
+  actions.append(undo, redo, erase, pencil, fill, hint);
 
   const pad = document.createElement('div');
   pad.className = 'number-pad';

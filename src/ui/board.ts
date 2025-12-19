@@ -106,6 +106,9 @@ export function createBoard(onSelect: (cell: number) => void): BoardHandle {
 
   root.append(bgLayer, gridLayer, markLayer);
 
+  // 直前の確定値を覚えておき、新しく入った値のときだけ一度だけ入場アニメを付ける。
+  const prevValues = new Array<number>(SIZE * SIZE).fill(0);
+
   root.addEventListener('pointerdown', (event) => {
     const rect = root.getBoundingClientRect();
     const col = Math.floor(((event.clientX - rect.left) / rect.width) * SIZE);
@@ -147,6 +150,10 @@ export function createBoard(onSelect: (cell: number) => void): BoardHandle {
       valueClasses.push(view.given[cell] ? 'is-given' : 'is-user');
       if (view.conflicts.has(cell)) valueClasses.push('is-conflict');
       if (selValue !== 0 && value === selValue) valueClasses.push('is-match');
+      if (value !== 0 && value !== prevValues[cell] && !view.given[cell]) {
+        valueClasses.push('is-placed');
+      }
+      prevValues[cell] = value;
       valueNode.setAttribute('class', valueClasses.join(' '));
 
       const mask = value === 0 ? view.pencils[cell]! : 0;
